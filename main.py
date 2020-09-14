@@ -1,5 +1,5 @@
 import tkinter as tk
-import pystray, classes
+import pystray, classes, time
 from functools import partial
 from PIL import Image
 from pystray import MenuItem
@@ -19,6 +19,8 @@ class MainClass(tk.Tk):
         self.tray_ico = Image.open("icon.ico")
         self.tools = tools
         self.tk_module = tk
+        #self.iconphoto(tk.PhotoImage(file="icon.png"))
+        self.title("AutoClicker")
         self.simpledialog_module = simpledialog
         engine.call_init(self)
         threading.Thread(target=self.iterate_locates, name="Locates").start()
@@ -38,15 +40,19 @@ class MainClass(tk.Tk):
         self.tray_icon.run()
     def iterate_locates(self):
         while True:
-            for path, func in engine.locate_events.items():
-                try:
-                    located = pyautogui.locateOnScreen(path)
-                    if located is not None:
-                        center = pyautogui.center(located)
-                        x, y = center.x, center.y
-                        func(self, x, y)
-                except:
-                    pass
+            for module, pathes in engine.locate_events.items():
+                if (not engine.is_module_disabled(module)):
+                    for path in pathes:
+                        try:
+                            located = pyautogui.locateOnScreen(path, confidence=lst[1])
+                            if located is not None:
+                                center = pyautogui.center(located)
+                                x, y = center.x, center.y
+
+                                lst[0](self, x, y)
+                        except:
+                            pass
+            time.sleep(0.0001)
     def add_button(self, module_name, **kwargs):
         button_obj = classes.Button(**kwargs)
         engine.add_button(module_name, button_obj)

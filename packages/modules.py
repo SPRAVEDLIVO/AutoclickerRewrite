@@ -1,4 +1,4 @@
-# Maganing modules script.
+# Managing modules script.
 import engine, os
 from functools import partial
 
@@ -14,13 +14,13 @@ def place_buttons(self, unforget_callback):
                 module_button.configure(command = partial(self.tools.unload_module, self, module_button, module))
             else:
                 module_button = self.add_button("modules", text = f"Load {module.capitalize()}")
-                module_button.configure(command = partial(self.tools.load_module, self, module))
+                module_button.configure(command = partial(self.tools.load_module, self, module_button, module))
             module_button.pack()
     self.add_button("modules", text = "Exit", command = partial(unforget_callback, "modules")).pack()
 
         
 
-
+@engine.load_function("modules")
 def init_module(self):
     modules_button = self.add_button("modules", can_forget=False, text="Modules", command = partial(place_buttons, self), width=10)
     modules_button.pack()

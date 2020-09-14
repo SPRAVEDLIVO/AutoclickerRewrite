@@ -95,6 +95,7 @@ def clear():
     global curRecord
     curRecord = []
 
+@engine.load_function("recording")
 def init_module(self):
     self.mkdir("packages/presets/")
     record_button  = self.add_button("recording", text="Record", command = lambda: record(self), width = 10)
