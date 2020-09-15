@@ -130,7 +130,7 @@ def click_on_locate(module: str, pathes: list or str, confidences: list or float
 
 def locate_event(module, path, confidence=1):
     def wrap(func):
-        locate_events[module].append([func, confidence])
+        locate_events[module].append([path, func, confidence])
     return wrap
 
 def tray_button(name, **kwargs):

@@ -44,12 +44,12 @@ class MainClass(tk.Tk):
                 if (not engine.is_module_disabled(module)):
                     for path in pathes:
                         try:
-                            located = pyautogui.locateOnScreen(path, confidence=lst[1])
+                            located = pyautogui.locateOnScreen(path[0], confidence=path[2])
                             if located is not None:
                                 center = pyautogui.center(located)
                                 x, y = center.x, center.y
 
-                                lst[0](self, x, y)
+                                path[1](self, x, y)
                         except:
                             pass
             time.sleep(0.0001)
