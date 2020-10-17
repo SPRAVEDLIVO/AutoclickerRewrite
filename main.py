@@ -30,7 +30,7 @@ class MainClass(tk.Tk):
         self.after(0, self.deiconify)
     def mkdir(self, dirname):
         if (not os.path.exists(dirname)):
-            os.mkdir(dirname)
+            os.makedirs(dirname)
     def init_icon(self):
         self.withdraw()
         menu = []
